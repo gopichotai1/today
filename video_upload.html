@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .upload-form {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        .video-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .video-item {
+            width: 250px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        video {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload and View Videos</h1>
+
+    <div class="upload-form">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="video">Choose a video to upload</label><br>
+            <input type="file" name="video" accept="video/*" required><br><br>
+            <button type="submit">Upload Video</button>
+        </form>
+    </div>
+
+    <div class="video-list">
+        {% for video in videos %}
+        <div class="video-item">
+            <h3>{{ video[1] }}</h3>
+            <video controls>
+                <source src="{{ url_for('static', filename='videos/' + video[2]) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div><br>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
